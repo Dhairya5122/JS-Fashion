@@ -13,7 +13,7 @@ const Welcome3 = () => {
 
   const welcome3 = () => {
     //@ts-ignore
-    navigate("welcome3");
+    navigate("welcome4");
   };
 
   return (

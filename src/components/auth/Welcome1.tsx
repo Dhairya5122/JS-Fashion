@@ -8,7 +8,7 @@ const Welcome1 = () => {
 
   const login = () => {
     //@ts-ignore
-    navigate("Login");
+    navigate("welcome4");
   };
 
   const welcome2 = () => {
