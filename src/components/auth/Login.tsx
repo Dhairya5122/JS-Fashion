@@ -1,5 +1,5 @@
 import {} from "react-native";
-import React from "react";
+import React, { memo } from "react";
 import {
   Box,
   Image,
@@ -17,14 +17,17 @@ import { useNavigation } from "@react-navigation/native";
 import Lottie from "lottie-react-native";
 
 const logo = require("../../../assets/logo2.png");
-
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string().required("Password is required"),
 });
 
 const Login = () => {
-  const handleLogin = (values) => {};
+  const { navigate } = useNavigation();
+  const handleSubmit = () => {
+    //@ts-ignore
+    navigate("BottomTab");
+  };
   return (
     <Formik
       initialValues={{
@@ -32,7 +35,7 @@ const Login = () => {
         password: "123456789",
       }}
       validationSchema={LoginSchema}
-      onSubmit={handleLogin}
+      onSubmit={handleSubmit}
     >
       {({
         handleChange,
@@ -88,7 +91,7 @@ const Login = () => {
                 fontSize={"lg"}
                 fontWeight={"semibold"}
               >
-                To Expore Our Services More Deeply
+                To Explore Our Services More Deeply
               </Text>
               <Box>
                 <Text color={"white"} fontSize={"lg"} mb={2}>
@@ -136,6 +139,7 @@ const Login = () => {
                   alignSelf={"center"}
                   bg={"white"}
                   mt={10}
+                  //@ts-ignore
                   onPress={handleSubmit}
                 >
                   <Text
@@ -156,4 +160,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default memo(Login);

@@ -1,5 +1,5 @@
 import {} from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import { Box, View, Text, Image, Button } from "native-base";
 import Lottie from "lottie-react-native";
 
@@ -111,4 +111,4 @@ const Welcome = () => {
   );
 };
 
-export default Welcome;
+export default memo(Welcome);
