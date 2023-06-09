@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 const Welcome1 = () => {
   const { navigate } = useNavigation();
 
-  const login = () => {
+  const welcome4 = () => {
     //@ts-ignore
     navigate("welcome4");
   };
@@ -19,7 +19,7 @@ const Welcome1 = () => {
   return (
     <ScrollView bg={"orange.400"}>
       <View m={5}>
-        <Pressable onPress={login}>
+        <Pressable onPress={welcome4}>
           <Text fontSize={"xl"} color={"white"}>
             SKIP
           </Text>
@@ -27,7 +27,6 @@ const Welcome1 = () => {
         <Box h={"96"} w={"96"}>
           <Lottie
             resizeMode="center"
-            style={{}}
             source={require("../../../assets/Lottie_Login/112545-wumpus-hi.json")}
             autoPlay
           />

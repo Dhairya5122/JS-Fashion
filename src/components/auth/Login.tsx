@@ -45,7 +45,7 @@ const Login = () => {
         errors,
         touched,
       }) => (
-        <View bg={"#313031"} h={"full"}>
+        <View bg={"blue.400"} h={"full"}>
           <ScrollView mb={10}>
             <Box
               width={10}
@@ -105,6 +105,7 @@ const Login = () => {
                   borderColor={"#313031"}
                   placeholder="Email"
                   value={values.email}
+                  fontSize={"20"}
                   onChangeText={handleChange("email")}
                   onBlur={handleBlur("email")}
                 />
@@ -127,6 +128,7 @@ const Login = () => {
                   value={values.password}
                   onChangeText={handleChange("password")}
                   onBlur={handleBlur("password")}
+                  fontSize={"20"}
                   secureTextEntry
                 />
                 {touched.password && errors.password && (

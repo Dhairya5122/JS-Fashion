@@ -2,20 +2,32 @@ import { View, Text, ScrollView, Box, Image, Button } from "native-base";
 import React, { memo } from "react";
 import Lottie from "lottie-react-native";
 import { useNavigation } from "@react-navigation/native";
+import { ImageBackground } from "react-native";
 
-const logo = require("../../../assets/logo-white.png");
+const logo = require("../../../assets/logo-black.png");
 
 const Welcome4 = () => {
   const { navigate } = useNavigation();
+
   const signin = () => {
-    navigate();
+    //@ts-ignore
+    navigate("Login");
   };
   const signup = () => {
-    navigate();
+    //@ts-ignore
+    navigate("Signup");
   };
 
   return (
-    <ScrollView bg={"coolGray.800"}>
+    <ScrollView bg={"white"}>
+      <Box position={"absolute"} h={"full"} w={"full"} opacity={0.09}>
+        <Lottie
+          speed={3}
+          resizeMode="contain"
+          source={require("../../../assets/Lottie_Login/82095-additional-animated-blue-background.json")}
+          autoPlay
+        />
+      </Box>
       <View m={5} alignItems={"center"} justifyContent={"center"}>
         <Box h={"32"} w={"96"} mt={20} alignSelf={"center"}>
           <Lottie
@@ -25,7 +37,7 @@ const Welcome4 = () => {
             loop={false}
           />
         </Box>
-        <Text color={"white"} fontSize={"2xl"} fontWeight={"semi-bold"}>
+        <Text color={"black"} fontSize={"2xl"} fontWeight={"semi-bold"}>
           TO THE
         </Text>
         <Image
@@ -37,13 +49,19 @@ const Welcome4 = () => {
         />
 
         <Box>
-          <Button onPress={signin} w={"60%"} bg={"white"} borderRadius={15}>
-            <Text fontSize={"20"} fontWeight={"semibold"}>
+          <Button onPress={signin} w={"60%"} bg={"blue.400"} borderRadius={15}>
+            <Text color={"white"} fontSize={"20"} fontWeight={"semibold"}>
               Already A User ?
             </Text>
           </Button>
-          <Button onPress={signup} bg={"white"} borderRadius={15} mt={5} mb={5}>
-            <Text fontSize={"20"} fontWeight={"semibold"}>
+          <Button
+            onPress={signup}
+            bg={"pink.400"}
+            borderRadius={15}
+            mt={5}
+            mb={5}
+          >
+            <Text color={"white"} fontSize={"20"} fontWeight={"semibold"}>
               Sign Up
             </Text>
           </Button>

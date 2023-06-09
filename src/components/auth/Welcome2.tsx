@@ -6,9 +6,9 @@ import { useNavigation } from "@react-navigation/native";
 const Welcome2 = () => {
   const { navigate } = useNavigation();
 
-  const login = () => {
+  const welcome4 = () => {
     //@ts-ignore
-    navigate("Login");
+    navigate("welcome4");
   };
 
   const welcome2 = () => {
@@ -19,7 +19,7 @@ const Welcome2 = () => {
   return (
     <ScrollView bg={"blue.400"}>
       <View m={5}>
-        <Pressable onPress={login}>
+        <Pressable onPress={welcome4}>
           <Text fontSize={"xl"} color={"white"}>
             SKIP
           </Text>

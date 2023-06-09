@@ -10,7 +10,6 @@ import {
   Input,
   ScrollView,
 } from "native-base";
-import { Ionicons } from "@expo/vector-icons";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useNavigation } from "@react-navigation/native";
@@ -49,7 +48,7 @@ const Signup = () => {
         errors,
         touched,
       }) => (
-        <View bg={"#313031"} h={"full"}>
+        <View bg={"pink.400"} h={"full"}>
           <ScrollView mb={10}>
             <Box
               width={10}
@@ -98,7 +97,7 @@ const Signup = () => {
                 To Explore Our Services More Deeply
               </Text>
               <Box>
-                <Text color={"white"} fontSize={"lg"} mb={2}>
+                <Text color={"white"} fontSize={"lg"} mb={2} mt={2}>
                   Name
                 </Text>
                 <Input
@@ -111,13 +110,14 @@ const Signup = () => {
                   value={values.name}
                   onChangeText={handleChange("name")}
                   onBlur={handleBlur("name")}
+                  fontSize={"20"}
                 />
 
                 {touched.name && errors.name && (
                   <Text style={{ color: "red" }}>{errors.name}</Text>
                 )}
 
-                <Text color={"white"} fontSize={"lg"} mb={2}>
+                <Text color={"white"} fontSize={"lg"} mb={2} mt={4}>
                   User Name
                 </Text>
                 <Input
@@ -130,12 +130,13 @@ const Signup = () => {
                   value={values.username}
                   onChangeText={handleChange("username")}
                   onBlur={handleBlur("username")}
+                  fontSize={"20"}
                 />
 
                 {touched.username && errors.username && (
                   <Text style={{ color: "red" }}>{errors.username}</Text>
                 )}
-                <Text color={"white"} fontSize={"lg"} mb={2}>
+                <Text color={"white"} fontSize={"lg"} mb={2} mt={4}>
                   Enter Email Address
                 </Text>
                 <Input
@@ -148,13 +149,14 @@ const Signup = () => {
                   value={values.email}
                   onChangeText={handleChange("email")}
                   onBlur={handleBlur("email")}
+                  fontSize={"20"}
                 />
 
                 {touched.email && errors.email && (
                   <Text style={{ color: "red" }}>{errors.email}</Text>
                 )}
 
-                <Text color={"white"} fontSize={"lg"} mt={2} mb={2}>
+                <Text color={"white"} fontSize={"lg"} mt={4} mb={2}>
                   Enter Password
                 </Text>
                 <Input
@@ -169,11 +171,11 @@ const Signup = () => {
                   onChangeText={handleChange("password")}
                   onBlur={handleBlur("password")}
                   secureTextEntry
+                  fontSize={"20"}
                 />
                 {touched.password && errors.password && (
                   <Text style={{ color: "red" }}>{errors.password}</Text>
                 )}
-
                 <Button
                   w={"24"}
                   borderRadius={20}
