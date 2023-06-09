@@ -21,6 +21,7 @@ const LoginSchema = Yup.object().shape({
   username: Yup.string().required(),
   email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string().required("Password is required"),
+  mobile: Yup.string().required("Mobile Number is required").max(10).min(10),
 });
 
 const Signup = () => {
@@ -36,6 +37,7 @@ const Signup = () => {
         email: "",
         username: "",
         password: "",
+        mobile: "",
       }}
       validationSchema={LoginSchema}
       onSubmit={handleSubmit}
@@ -136,6 +138,28 @@ const Signup = () => {
                 {touched.username && errors.username && (
                   <Text style={{ color: "red" }}>{errors.username}</Text>
                 )}
+
+                <Text color={"white"} fontSize={"lg"} mb={2} mt={4}>
+                  Enter Mobile Number
+                </Text>
+                <Input
+                  w={"90%"}
+                  bg={"white"}
+                  bgColor={"white"}
+                  borderRadius={10}
+                  borderColor={"#313031"}
+                  placeholder="Enter Mobile Number"
+                  value={values.mobile}
+                  keyboardType="phone-pad"
+                  onChangeText={handleChange("mobile")}
+                  onBlur={handleBlur("mobile")}
+                  fontSize={"20"}
+                />
+
+                {touched.mobile && errors.mobile && (
+                  <Text style={{ color: "red" }}>{errors.mobile}</Text>
+                )}
+
                 <Text color={"white"} fontSize={"lg"} mb={2} mt={4}>
                   Enter Email Address
                 </Text>
