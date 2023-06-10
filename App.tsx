@@ -68,24 +68,37 @@ const App = () => {
     },
   });
 
-  if (fontsLoaded === false) {
-    return <AppLoading />;
-  } else {
-    return (
-      <>
-        <NativeBaseProvider theme={theme}>
-          <NavigationContainer>
-            <SafeAreaProvider>
-              <SafeAreaView style={{ flex: 1 }}>
-                <StatusBar hidden={false} />
-                <Routes />
-              </SafeAreaView>
-            </SafeAreaProvider>
-          </NavigationContainer>
-        </NativeBaseProvider>
-      </>
-    );
+  React.useEffect(() => {
+    async function prepare() {
+      await SplashScreen.preventAutoHideAsync();
+    }
+    prepare();
+  }, []);
+
+  const onLayoutRootView = React.useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
   }
+
+  return (
+    <>
+      <NativeBaseProvider theme={theme}>
+        <NavigationContainer onReady={onLayoutRootView}>
+          <SafeAreaProvider>
+            <SafeAreaView style={{ flex: 1 }}>
+              <StatusBar hidden={false} />
+              <Routes />
+            </SafeAreaView>
+          </SafeAreaProvider>
+        </NavigationContainer>
+      </NativeBaseProvider>
+    </>
+  );
 };
 
 export default memo(App);

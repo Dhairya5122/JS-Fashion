@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { ImageBackground } from "react-native";
 
 const logo = require("../../../assets/logo-black.png");
-
+const yamunaji = require("../../../assets/yamunaji.png");
 const Welcome4 = () => {
   const { navigate } = useNavigation();
 
@@ -20,13 +20,8 @@ const Welcome4 = () => {
 
   return (
     <ScrollView bg={"white"}>
-      <Box position={"absolute"} h={"full"} w={"full"} opacity={0.09}>
-        <Lottie
-          speed={3}
-          resizeMode="contain"
-          source={require("../../../assets/Lottie_Login/82095-additional-animated-blue-background.json")}
-          autoPlay
-        />
+      <Box position={"absolute"} alignItems={"center"} opacity={0.19}>
+        <Image source={yamunaji} alt="" alignSelf={"center"} mt={"50%"} />
       </Box>
       <View m={5} alignItems={"center"} justifyContent={"center"}>
         <Box h={"32"} w={"96"} mt={20} alignSelf={"center"}>
@@ -34,7 +29,6 @@ const Welcome4 = () => {
             resizeMode="contain"
             source={require("../../../assets/Lottie_Login/39755-handwritten-welcome-new.json")}
             autoPlay
-            loop={false}
           />
         </Box>
         <Text color={"black"} fontSize={"2xl"} fontWeight={"semi-bold"}>

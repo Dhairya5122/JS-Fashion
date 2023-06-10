@@ -1,5 +1,5 @@
 import {} from "react-native";
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import {
   Box,
   Image,
@@ -9,38 +9,107 @@ import {
   Button,
   Input,
   ScrollView,
+  Alert,
+  useToast,
+  HStack,
 } from "native-base";
-import { Formik } from "formik";
+import { Ionicons } from "@expo/vector-icons";
+import { Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import Lottie from "lottie-react-native";
-
+import { useFetch } from "use-http";
+import axios from "axios";
 const logo = require("../../../assets/logo2.png");
+
+export interface Root {
+  success: boolean;
+  msg: string;
+  data: Data;
+}
+
+export interface Data {
+  username: string;
+  name: string;
+  mobile: string;
+  email: string;
+  password: string;
+}
+
+const initialvalues = {
+  username: "",
+  name: "",
+  mobile: "",
+  email: "",
+  password: "",
+} as Data;
+
 const LoginSchema = Yup.object().shape({
-  name: Yup.string().required(),
-  username: Yup.string().required(),
   email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string().required("Password is required"),
-  mobile: Yup.string().required("Mobile Number is required").max(10).min(10),
+  username: Yup.string().required("Username is required"),
+  name: Yup.string().required("Name is required"),
+  mobile: Yup.string().required("Mobile is required"),
 });
 
 const Signup = () => {
+  const [key, setKey] = useState(Math.random());
+  const toast = useToast();
   const { navigate } = useNavigation();
-  const handleSubmit = () => {
-    //@ts-ignore
-    navigate("BottomTab");
+
+  const BASE_URL = "https://parental-modeling-kg-camcorders.trycloudflare.com";
+  const { get, post, response, error } = useFetch(`${BASE_URL}/api/register`);
+
+  const handleSubmit = async (
+    val: typeof initialvalues,
+    actions: FormikHelpers<typeof initialvalues>
+  ) => {
+    try {
+      actions.setSubmitting(true);
+
+      const res = (await post(val)) as Root;
+
+      if (res.success) {
+        console.log(res.data);
+        toast.show({
+          render: () => (
+            <Alert status="success">
+              <HStack space={2} alignItems={"center"} justifyContent={"center"}>
+                <Alert.Icon />
+
+                <Text>{res.msg}</Text>
+              </HStack>
+            </Alert>
+          ),
+          placement: "top",
+        });
+      } else {
+        toast.show({
+          render: () => (
+            <Alert status="error">
+              <Alert.Icon />
+              <Text>{res.msg}</Text>
+            </Alert>
+          ),
+          placement: "top",
+        });
+        console.log(res.msg);
+      }
+
+      actions.setSubmitting(false);
+
+      setKey(Math.random());
+    } catch (err) {
+      console.log(err.message);
+    }
   };
+
   return (
     <Formik
-      initialValues={{
-        name: "",
-        email: "",
-        username: "",
-        password: "",
-        mobile: "",
-      }}
+      initialValues={initialvalues}
       validationSchema={LoginSchema}
       onSubmit={handleSubmit}
+      key={key}
     >
       {({
         handleChange,
@@ -88,7 +157,7 @@ const Signup = () => {
                 />
               </Box>
               <Text color={"white"} fontSize={"6xl"} fontWeight={"semi-bold"}>
-                SIGNUP
+                SIGN UP
               </Text>
               <Text
                 mb={10}
@@ -99,28 +168,8 @@ const Signup = () => {
                 To Explore Our Services More Deeply
               </Text>
               <Box>
-                <Text color={"white"} fontSize={"lg"} mb={2} mt={2}>
-                  Name
-                </Text>
-                <Input
-                  w={"90%"}
-                  bg={"white"}
-                  bgColor={"white"}
-                  borderRadius={10}
-                  borderColor={"#313031"}
-                  placeholder="Your Name"
-                  value={values.name}
-                  onChangeText={handleChange("name")}
-                  onBlur={handleBlur("name")}
-                  fontSize={"20"}
-                />
-
-                {touched.name && errors.name && (
-                  <Text style={{ color: "red" }}>{errors.name}</Text>
-                )}
-
-                <Text color={"white"} fontSize={"lg"} mb={2} mt={4}>
-                  User Name
+                <Text color={"white"} fontSize={"lg"} mb={2}>
+                  UserName
                 </Text>
                 <Input
                   w={"90%"}
@@ -130,16 +179,36 @@ const Signup = () => {
                   borderColor={"#313031"}
                   placeholder="Enter UserName"
                   value={values.username}
+                  fontSize={"20"}
                   onChangeText={handleChange("username")}
                   onBlur={handleBlur("username")}
-                  fontSize={"20"}
                 />
 
                 {touched.username && errors.username && (
                   <Text style={{ color: "red" }}>{errors.username}</Text>
                 )}
 
-                <Text color={"white"} fontSize={"lg"} mb={2} mt={4}>
+                <Text color={"white"} fontSize={"lg"} mb={2}>
+                  Enter Name
+                </Text>
+                <Input
+                  w={"90%"}
+                  bg={"white"}
+                  bgColor={"white"}
+                  borderRadius={10}
+                  borderColor={"#313031"}
+                  placeholder="Enter Name"
+                  value={values.name}
+                  fontSize={"20"}
+                  onChangeText={handleChange("name")}
+                  onBlur={handleBlur("name")}
+                />
+
+                {touched.name && errors.name && (
+                  <Text style={{ color: "red" }}>{errors.name}</Text>
+                )}
+
+                <Text color={"white"} fontSize={"lg"} mb={2}>
                   Enter Mobile Number
                 </Text>
                 <Input
@@ -150,18 +219,17 @@ const Signup = () => {
                   borderColor={"#313031"}
                   placeholder="Enter Mobile Number"
                   value={values.mobile}
-                  keyboardType="phone-pad"
+                  fontSize={"20"}
                   onChangeText={handleChange("mobile")}
                   onBlur={handleBlur("mobile")}
-                  fontSize={"20"}
                 />
 
                 {touched.mobile && errors.mobile && (
                   <Text style={{ color: "red" }}>{errors.mobile}</Text>
                 )}
 
-                <Text color={"white"} fontSize={"lg"} mb={2} mt={4}>
-                  Enter Email Address
+                <Text color={"white"} fontSize={"lg"} mb={2}>
+                  Enter Email
                 </Text>
                 <Input
                   w={"90%"}
@@ -169,18 +237,18 @@ const Signup = () => {
                   bgColor={"white"}
                   borderRadius={10}
                   borderColor={"#313031"}
-                  placeholder="Email"
+                  placeholder="Enter Email"
                   value={values.email}
+                  fontSize={"20"}
                   onChangeText={handleChange("email")}
                   onBlur={handleBlur("email")}
-                  fontSize={"20"}
                 />
 
                 {touched.email && errors.email && (
                   <Text style={{ color: "red" }}>{errors.email}</Text>
                 )}
 
-                <Text color={"white"} fontSize={"lg"} mt={4} mb={2}>
+                <Text color={"white"} fontSize={"lg"} mt={2} mb={2}>
                   Enter Password
                 </Text>
                 <Input
@@ -194,12 +262,13 @@ const Signup = () => {
                   value={values.password}
                   onChangeText={handleChange("password")}
                   onBlur={handleBlur("password")}
-                  secureTextEntry
                   fontSize={"20"}
+                  secureTextEntry
                 />
                 {touched.password && errors.password && (
                   <Text style={{ color: "red" }}>{errors.password}</Text>
                 )}
+
                 <Button
                   w={"24"}
                   borderRadius={20}
@@ -215,7 +284,7 @@ const Signup = () => {
                     fontWeight={"semibold"}
                     fontSize={"lg"}
                   >
-                    SIGNUP
+                    LOGIN
                   </Text>
                 </Button>
               </Box>

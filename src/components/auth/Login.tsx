@@ -1,5 +1,5 @@
 import {} from "react-native";
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import {
   Box,
   Image,
@@ -9,14 +9,35 @@ import {
   Button,
   Input,
   ScrollView,
+  Alert,
+  HStack,
+  useToast,
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
-import { Formik } from "formik";
+import { Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import Lottie from "lottie-react-native";
+import { useFetch } from "use-http";
 
 const logo = require("../../../assets/logo2.png");
+
+export interface Root {
+  success: boolean;
+  msg: string;
+  data: Data;
+}
+
+export interface Data {
+  email: string;
+  password: string;
+}
+
+const initialvalues = {
+  email: "",
+  password: "",
+} as Data;
+
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string().required("Password is required"),
@@ -24,16 +45,59 @@ const LoginSchema = Yup.object().shape({
 
 const Login = () => {
   const { navigate } = useNavigation();
-  const handleSubmit = () => {
-    //@ts-ignore
-    navigate("BottomTab");
+
+  const [key, setKey] = useState(Math.random());
+  const toast = useToast();
+
+  const BASE_URL = "https://parental-modeling-kg-camcorders.trycloudflare.com";
+  const { get, post, response, error } = useFetch(`${BASE_URL}/api/login`);
+
+  const handleSubmit = async (
+    val: typeof initialvalues,
+    actions: FormikHelpers<typeof initialvalues>
+  ) => {
+    try {
+      actions.setSubmitting(true);
+
+      const res = (await post(val)) as Root;
+
+      if (res.success) {
+        console.log("01", res.data);
+        toast.show({
+          render: () => (
+            <Alert status="success">
+              <HStack space={2} alignItems={"center"} justifyContent={"center"}>
+                <Alert.Icon />
+
+                <Text>{res.msg}</Text>
+              </HStack>
+            </Alert>
+          ),
+          placement: "top",
+        });
+      } else {
+        toast.show({
+          render: () => (
+            <Alert status="error">
+              <Alert.Icon />
+              <Text>{res.msg}</Text>
+            </Alert>
+          ),
+          placement: "top",
+        });
+        console.log("02", res.msg);
+      }
+
+      actions.setSubmitting(false);
+
+      setKey(Math.random());
+    } catch (err) {
+      console.log(err.message);
+    }
   };
   return (
     <Formik
-      initialValues={{
-        email: "shahdhairya101@gmail.com",
-        password: "123456789",
-      }}
+      initialValues={initialvalues}
       validationSchema={LoginSchema}
       onSubmit={handleSubmit}
     >
