@@ -3,6 +3,7 @@ import React, { memo } from "react";
 import Lottie from "lottie-react-native";
 import { useNavigation } from "@react-navigation/native";
 import { ImageBackground } from "react-native";
+import isEqual from "react-fast-compare";
 
 const logo = require("../../../assets/logo-black.png");
 const yamunaji = require("../../../assets/yamunaji.png");
@@ -20,7 +21,17 @@ const Welcome4 = () => {
 
   return (
     <ScrollView bg={"white"}>
-      <Box position={"absolute"} alignItems={"center"} opacity={0.19}>
+      <Box
+        position={"absolute"}
+        h={"full"}
+        alignItems={"center"}
+        opacity={0.19}
+      >
+        <Lottie
+          resizeMode="cover"
+          source={require("../../../assets/Lottie_Login/82095-additional-animated-blue-background.json")}
+          autoPlay
+        />
         <Image source={yamunaji} alt="" alignSelf={"center"} mt={"50%"} />
       </Box>
       <View m={5} alignItems={"center"} justifyContent={"center"}>
@@ -29,6 +40,7 @@ const Welcome4 = () => {
             resizeMode="contain"
             source={require("../../../assets/Lottie_Login/39755-handwritten-welcome-new.json")}
             autoPlay
+            loop={false}
           />
         </Box>
         <Text color={"black"} fontSize={"2xl"} fontWeight={"semi-bold"}>
@@ -65,4 +77,4 @@ const Welcome4 = () => {
   );
 };
 
-export default memo(Welcome4);
+export default memo(Welcome4, isEqual);

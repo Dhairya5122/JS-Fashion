@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import * as SplashScreen from "expo-splash-screen";
 import { NativeBaseProvider, StatusBar, extendTheme } from "native-base";
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 SplashScreen.preventAutoHideAsync();
@@ -17,8 +17,13 @@ import {
 import AppLoading from "expo-app-loading";
 import Routes from "./src/Routes";
 import { SafeAreaView } from "react-native";
+import useBase_url from "./src/components/context/UseContext";
 
 const App = () => {
+  const [baseUrl, setBaseUrl] = useState(
+    "https://naples-equipped-fever-tragedy.trycloudflare.com"
+  );
+
   const [fontsLoaded] = useFonts({
     Quicksand_300Light,
     Quicksand_400Regular,
@@ -87,16 +92,18 @@ const App = () => {
 
   return (
     <>
-      <NativeBaseProvider theme={theme}>
-        <NavigationContainer onReady={onLayoutRootView}>
-          <SafeAreaProvider>
-            <SafeAreaView style={{ flex: 1 }}>
-              <StatusBar hidden={false} />
-              <Routes />
-            </SafeAreaView>
-          </SafeAreaProvider>
-        </NavigationContainer>
-      </NativeBaseProvider>
+      <useBase_url.Provider value={baseUrl}>
+        <NativeBaseProvider theme={theme}>
+          <NavigationContainer onReady={onLayoutRootView}>
+            <SafeAreaProvider>
+              <SafeAreaView style={{ flex: 1 }}>
+                <StatusBar hidden={false} />
+                <Routes />
+              </SafeAreaView>
+            </SafeAreaProvider>
+          </NavigationContainer>
+        </NativeBaseProvider>
+      </useBase_url.Provider>
     </>
   );
 };

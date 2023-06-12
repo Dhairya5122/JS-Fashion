@@ -1,5 +1,5 @@
 import {} from "react-native";
-import React, { memo, useState } from "react";
+import React, { memo, useContext, useState } from "react";
 import {
   Box,
   Image,
@@ -19,6 +19,8 @@ import * as Yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import Lottie from "lottie-react-native";
 import { useFetch } from "use-http";
+import useBase_url from "../context/UseContext";
+import isEqual from "react-fast-compare";
 
 const logo = require("../../../assets/logo2.png");
 
@@ -34,8 +36,8 @@ export interface Data {
 }
 
 const initialvalues = {
-  email: "",
-  password: "",
+  email: "shahdhairya101@gmail.com",
+  password: "Dhairya",
 } as Data;
 
 const LoginSchema = Yup.object().shape({
@@ -45,12 +47,11 @@ const LoginSchema = Yup.object().shape({
 
 const Login = () => {
   const { navigate } = useNavigation();
-
+  const baseUrl = useContext(useBase_url);
   const [key, setKey] = useState(Math.random());
   const toast = useToast();
 
-  const BASE_URL = "https://parental-modeling-kg-camcorders.trycloudflare.com";
-  const { get, post, response, error } = useFetch(`${BASE_URL}/api/login`);
+  const { get, post, response, error } = useFetch(`${baseUrl}/api/login`);
 
   const handleSubmit = async (
     val: typeof initialvalues,
@@ -75,6 +76,8 @@ const Login = () => {
           ),
           placement: "top",
         });
+        //@ts-ignore
+        navigate("BottomTab");
       } else {
         toast.show({
           render: () => (
@@ -109,8 +112,8 @@ const Login = () => {
         errors,
         touched,
       }) => (
-        <View bg={"blue.400"} h={"full"}>
-          <ScrollView mb={10}>
+        <View bg={"blue.400"} h={"full"} mb={10}>
+          <ScrollView>
             <Box
               width={10}
               height={0}
@@ -226,4 +229,4 @@ const Login = () => {
   );
 };
 
-export default memo(Login);
+export default memo(Login, isEqual);

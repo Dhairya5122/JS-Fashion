@@ -1,5 +1,5 @@
 import {} from "react-native";
-import React, { memo, useState } from "react";
+import React, { memo, useContext, useState } from "react";
 import {
   Box,
   Image,
@@ -19,7 +19,9 @@ import * as Yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import Lottie from "lottie-react-native";
 import { useFetch } from "use-http";
-import axios from "axios";
+import useBase_url from "../context/UseContext";
+import isEqual from "react-fast-compare";
+
 const logo = require("../../../assets/logo2.png");
 
 export interface Root {
@@ -56,9 +58,9 @@ const Signup = () => {
   const [key, setKey] = useState(Math.random());
   const toast = useToast();
   const { navigate } = useNavigation();
+  const baseUrl = useContext(useBase_url);
 
-  const BASE_URL = "https://parental-modeling-kg-camcorders.trycloudflare.com";
-  const { get, post, response, error } = useFetch(`${BASE_URL}/api/register`);
+  const { get, post, response, error } = useFetch(`${baseUrl}/api/register`);
 
   const handleSubmit = async (
     val: typeof initialvalues,
@@ -83,6 +85,8 @@ const Signup = () => {
           ),
           placement: "top",
         });
+        //@ts-ignore
+        navigate("BottomTab");
       } else {
         toast.show({
           render: () => (
@@ -119,8 +123,8 @@ const Signup = () => {
         errors,
         touched,
       }) => (
-        <View bg={"pink.400"} h={"full"}>
-          <ScrollView mb={10}>
+        <View bg={"pink.400"} h={"full"} mb={10}>
+          <ScrollView>
             <Box
               width={10}
               height={0}
@@ -275,6 +279,8 @@ const Signup = () => {
                   alignSelf={"center"}
                   bg={"white"}
                   mt={10}
+                  mb={10}
+                  borderWidth={1}
                   //@ts-ignore
                   onPress={handleSubmit}
                 >
@@ -284,7 +290,7 @@ const Signup = () => {
                     fontWeight={"semibold"}
                     fontSize={"lg"}
                   >
-                    LOGIN
+                    SIGNUP
                   </Text>
                 </Button>
               </Box>
@@ -296,4 +302,4 @@ const Signup = () => {
   );
 };
 
-export default memo(Signup);
+export default memo(Signup, isEqual);

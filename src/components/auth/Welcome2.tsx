@@ -2,6 +2,7 @@ import { View, Text, ScrollView, Box, Pressable, Button } from "native-base";
 import React, { memo } from "react";
 import Lottie from "lottie-react-native";
 import { useNavigation } from "@react-navigation/native";
+import isEqual from "react-fast-compare";
 
 const Welcome2 = () => {
   const { navigate } = useNavigation();
@@ -53,4 +54,4 @@ const Welcome2 = () => {
   );
 };
 
-export default memo(Welcome2);
+export default memo(Welcome2, isEqual);

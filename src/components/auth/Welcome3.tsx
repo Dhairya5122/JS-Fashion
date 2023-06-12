@@ -2,6 +2,7 @@ import { View, Text, ScrollView, Box, Pressable, Button } from "native-base";
 import React, { memo } from "react";
 import Lottie from "lottie-react-native";
 import { useNavigation } from "@react-navigation/native";
+import isEqual from "react-fast-compare";
 
 const Welcome3 = () => {
   const { navigate } = useNavigation();
@@ -18,7 +19,7 @@ const Welcome3 = () => {
 
   return (
     <ScrollView bg={"amber.500"}>
-      <View m={5}>
+      <View m={5} mb={10}>
         <Pressable onPress={welcome4}>
           <Text fontSize={"xl"} color={"white"}>
             SKIP
@@ -29,6 +30,7 @@ const Welcome3 = () => {
             resizeMode="contain"
             source={require("../../../assets/Lottie_Login/90698-online-investment.json")}
             autoPlay
+            loop={false}
           />
         </Box>
         <Text w={"80"} mt={10} fontSize={"3xl"} color={"white"}>
@@ -53,4 +55,4 @@ const Welcome3 = () => {
   );
 };
 
-export default memo(Welcome3);
+export default memo(Welcome3, isEqual);
