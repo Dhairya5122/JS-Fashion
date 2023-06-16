@@ -7,7 +7,7 @@ import { Text } from "native-base";
 import BottomTab from "./components/BottomTab/BottomTabs";
 import Welcome1 from "./components/auth/Welcome1";
 import Welcome2 from "./components/auth/Welcome2";
-import Welcome3 from "./components/auth/Welcome3";
+// import Welcome3 from "./components/auth/Welcome3";
 import Welcome4 from "./components/auth/Welcome4";
 
 //@ts-ignore
@@ -24,6 +24,11 @@ const Routes = () => {
     <Suspense fallback={<Text>Loading...</Text>}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen
+          name="welcome4"
+          component={Welcome4}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name="welcome1"
           component={Welcome1}
           options={{ headerShown: false }}
@@ -33,16 +38,12 @@ const Routes = () => {
           component={Welcome2}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="welcome3"
           component={Welcome3}
           options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="welcome4"
-          component={Welcome4}
-          options={{ headerShown: false }}
-        />
+        /> */}
+
         <Stack.Screen
           name="Login"
           component={Login}

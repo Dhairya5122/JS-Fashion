@@ -21,7 +21,7 @@ import useBase_url from "./src/components/context/UseContext";
 
 const App = () => {
   const [baseUrl, setBaseUrl] = useState(
-    "https://naples-equipped-fever-tragedy.trycloudflare.com"
+    "https://illinois-writes-metric-bar.trycloudflare.com"
   );
 
   const [fontsLoaded] = useFonts({

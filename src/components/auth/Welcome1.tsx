@@ -9,7 +9,7 @@ const Welcome1 = () => {
 
   const welcome4 = () => {
     //@ts-ignore
-    navigate("welcome4");
+    navigate("BottomTab");
   };
 
   const welcome2 = () => {

@@ -9,12 +9,12 @@ const Welcome2 = () => {
 
   const welcome4 = () => {
     //@ts-ignore
-    navigate("welcome4");
+    navigate("BottomTab");
   };
 
   const welcome2 = () => {
     //@ts-ignore
-    navigate("welcome3");
+    navigate("BottomTab");
   };
 
   return (
@@ -30,6 +30,7 @@ const Welcome2 = () => {
             resizeMode="contain"
             source={require("../../../assets/Lottie_Login/112889-otz-webshop.json")}
             autoPlay
+            loop={false}
           />
         </Box>
         <Text w={"80"} mt={10} fontSize={"3xl"} color={"white"}>

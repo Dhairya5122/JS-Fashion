@@ -77,7 +77,7 @@ const Login = () => {
           placement: "top",
         });
         //@ts-ignore
-        navigate("BottomTab");
+        navigate("welcome1");
       } else {
         toast.show({
           render: () => (
