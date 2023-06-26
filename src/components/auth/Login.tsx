@@ -37,7 +37,7 @@ export interface Data {
 
 const initialvalues = {
   email: "shahdhairya101@gmail.com",
-  password: "Dhairya",
+  password: "dhairya",
 } as Data;
 
 const LoginSchema = Yup.object().shape({

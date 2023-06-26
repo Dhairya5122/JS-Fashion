@@ -4,11 +4,11 @@ import React, { useState, useEffect, lazy, Suspense } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as SplashScreen from "expo-splash-screen";
 import { Text } from "native-base";
-import BottomTab from "./components/BottomTab/BottomTabs";
 import Welcome1 from "./components/auth/Welcome1";
 import Welcome2 from "./components/auth/Welcome2";
 // import Welcome3 from "./components/auth/Welcome3";
 import Welcome4 from "./components/auth/Welcome4";
+import BottomTab from "./components/BottomTab/BottomTab";
 
 //@ts-ignore
 const Welcome = lazy(() => import("./components/auth/Welcome"));
